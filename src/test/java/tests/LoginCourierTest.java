@@ -2,20 +2,16 @@ package tests;
 
 import api.CourierApi;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import model.CourierDataLombok;
-import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.awaitility.Awaitility.await;
-import static java.util.concurrent.TimeUnit.SECONDS;
-
-
 import static java.net.HttpURLConnection.*;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 

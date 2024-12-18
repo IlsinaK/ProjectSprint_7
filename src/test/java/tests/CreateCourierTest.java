@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static java.net.HttpURLConnection.*;
-import static model.CourierGenerator.getRandomCourier;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
