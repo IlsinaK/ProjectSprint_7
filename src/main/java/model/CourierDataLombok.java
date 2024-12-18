@@ -21,3 +21,12 @@ public class CourierDataLombok {
         this.password = password;
         this.firstName = firstName;
     }
+
+    // Конструктор для создания курьера с логином и паролем
+    public CourierDataLombok(String login, String password) {
+        this.login = login;
+        this.password = password;
+        this.firstName = null; // Устанавливаем default значением для имени
+    }
+
+}

@@ -21,3 +21,15 @@ public class OrderApi extends RestApi {
                 .post(CREATE_ORDERS_URI)
                 .then();
     }
+
+    @Step("Get order")
+    public ValidatableResponse getOrders (){
+        return given()
+                .spec(requestSpecification())
+                .when()
+                .get(GET_ORDERS_URI)
+                .then();
+    }
+}
+
+
