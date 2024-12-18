@@ -1,6 +1,7 @@
 package tests;
 
 import api.CourierApi;
+import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import model.CourierDataLombok;
@@ -44,9 +45,10 @@ public class LoginCourierTest {
             courierApi.deleteCourier(courierId); // Удаляем курьера после теста
         }
     }
-
-    @DisplayName("Check courier can login")
     @Test
+    @DisplayName("The courier can log in")
+    @Description ("If the correct data is entered, the courier is logged in")
+
     public void courierCanLoginTest() {
         CourierDataLombok validCourierData = new CourierDataLombok(courierDataLombok.getLogin(), courierDataLombok.getPassword());
         ValidatableResponse loginResponse = courierApi.loginCourier(validCourierData);
@@ -56,9 +58,9 @@ public class LoginCourierTest {
                 .statusCode(HTTP_OK)
                 .body("id", notNullValue()); // Проверяем, что id совпадает с id созданного курьера
     }
-
-    @DisplayName("Check that login fails with incorrect credentials")
     @Test
+    @DisplayName("Login failed with incorrect credentials")
+    @Description ("The system will return an error if the data is entered incorrectly")
     public void loginFailsWithIncorrectCredentialsTest() {
         CourierDataLombok incorrectCourier = new CourierDataLombok("NonExistentUser", "wrongPassword");
         ValidatableResponse response = courierApi.loginCourier(incorrectCourier);
@@ -70,9 +72,10 @@ public class LoginCourierTest {
                 .body("message", is("Учетная запись не найдена"));
         needAuthorization = false;
     }
-
-    @DisplayName("Check that login fails with missing login")
     @Test
+    @DisplayName("Login failed due to lack of login")
+    @Description ("The system will return an error if the login is incorrect")
+
     public void loginFailsWithMissingLoginTest() {
         ValidatableResponse responseMissingLogin = courierApi.loginCourier(new CourierDataLombok(null, "password"));
         responseMissingLogin.log().all()
@@ -83,9 +86,10 @@ public class LoginCourierTest {
         needAuthorization = false;
     }
 
-
-    @DisplayName("Check that login fails with missing password")
-    @Test // Устанавливаем таймаут теста на 10 секунд
+    @Test
+    @DisplayName("Login failed due to missing password")
+    @Description ("The system will return an error if the password is entered incorrectly")
+    // Устанавливаем таймаут теста на 10 секунд
     public void passwordFailsWithMissingFieldsTest() {
         // Выполняем запрос и сохраняем начальное время
         ValidatableResponse responseMissingPassword = courierApi.loginCourier(new CourierDataLombok("NonExistentUser", ""));
@@ -103,10 +107,11 @@ public class LoginCourierTest {
     }
 
 
-
-    @DisplayName("Check that login fails for non-existent user")
     @Test
-    public void loginFailsForNonExistentUserTest() {
+    @DisplayName("Login for a non-existent user") // test name
+    @Description("If you log in under a non-existent user, the request returns an error")// описание теста
+
+        public void loginFailsForNonExistentUserTest() {
         CourierDataLombok nonExistentCourier = new CourierDataLombok("NonExistentUser", "password");
         ValidatableResponse response = courierApi.loginCourier(nonExistentCourier);
 

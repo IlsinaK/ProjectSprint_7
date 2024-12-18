@@ -1,6 +1,7 @@
 package tests;
 
 import api.CourierApi;
+import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import model.CourierDataLombok;
@@ -23,37 +24,33 @@ public class CreateCourierTest {
     @Before
     public void setUp() {
         courierApi = new CourierApi();
-
-        String loginParam = "Vlad" + RandomStringUtils.randomAlphabetic(4);
-        courierDataLombok = new CourierDataLombok(loginParam, "passwordVlad1234534", "Vlad");
-
-
     }
+
     @After
     public void cleanUp() {
         if (courierId != 0) {
             courierApi.deleteCourier(courierId);
         }
     }
-
-    @DisplayName("Check courier can be created")
     @Test
+    @DisplayName("Check courier can be created")
+    @Description("with the correct data, the courier can be created")
+
     public void courierCanBeCreatedTest() {
         String uniqueLogin = "TestUser_" + System.currentTimeMillis();
         courierDataLombok = new CourierDataLombok(uniqueLogin, "passwordsqmrg", "VladQVOto");
 
 
         ValidatableResponse response = courierApi.createCourierLombok(courierDataLombok);
-
-
         response.log().all()
                 .assertThat()
                 .statusCode(HTTP_CREATED)
                 .body("ok", is(true));
     }
-
-    @DisplayName("Check that duplicate courier cannot be created")
     @Test
+    @DisplayName("Check that duplicate courier cannot be created")
+    @Description("you cannot create two identical couriers")
+
     public void duplicateCourierCannotBeCreatedTest() {
         String login = "DuplicateUser";
         courierDataLombok = new CourierDataLombok(login, "password123", "Vlad");
@@ -69,9 +66,9 @@ public class CreateCourierTest {
                 .statusCode(HTTP_CONFLICT)
                 .body("message", equalTo("Этот логин уже используется. Попробуйте другой."));
     }
-
-    @DisplayName("Check that courier cannot be created without required fields")
     @Test
+    @DisplayName("Check that courier cannot be created without required fields")
+    @Description("If you do not enter a username, the courier will not be created")
     public void courierCannotBeCreatedWithoutRequiredFieldsTest() {
         courierDataLombok = new CourierDataLombok(null, "password", "TestName");
 
@@ -82,9 +79,9 @@ public class CreateCourierTest {
                 .statusCode(HTTP_BAD_REQUEST)
                 .body("message", is("Недостаточно данных для создания учетной записи"));
     }
-
-    @DisplayName("Check that courier cannot be created without password")
     @Test
+    @DisplayName("Check that courier cannot be created without password")
+    @Description("If you do not enter a password, the courier will not be created")
     public void courierCannotBeCreatedWithoutPasswordTest() {
         courierDataLombok = new CourierDataLombok("TestUser", null, "TestName");
 
