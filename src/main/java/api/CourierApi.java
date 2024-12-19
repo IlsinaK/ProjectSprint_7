@@ -1,12 +1,8 @@
 package api;
 
 import io.qameta.allure.Step;
-import io.restassured.RestAssured;
-import io.restassured.config.ConnectionConfig;
 import io.restassured.response.ValidatableResponse;
 import model.CourierDataLombok;
-
-import java.util.concurrent.TimeUnit;
 
 import static io.restassured.RestAssured.given;
 
@@ -26,3 +22,28 @@ public class CourierApi extends RestApi {
                 .post(CREATE_COURIER_URI)
                 .then();
     }
+
+    @Step("Login courier")
+    public ValidatableResponse loginCourier(CourierDataLombok courier) {
+        return given()
+                .spec(requestSpecification())
+                .body(courier)
+                .when()
+                .post(LOGIN_COURIER_URI)
+                .then();
+    }
+
+    @Step("Delete courier")
+    public ValidatableResponse deleteCourier(int id) {
+        return given()
+                .spec(requestSpecification())
+                .pathParam("id", id)
+                .when()
+                .delete(DELETE_COURIER_URI)
+                .then();
+    }
+
+
+}
+
+

@@ -17,6 +17,8 @@
         <lombok.version>1.18.26</lombok.version>
     </properties>
 
+
+
     <dependencies>
         <dependency>
             <groupId>io.qameta.allure</groupId>
