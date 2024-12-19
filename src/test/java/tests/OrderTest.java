@@ -5,6 +5,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import model.OrderData;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -63,9 +64,8 @@ public class OrderTest {
     }
 
 
-    @Test
-    @DisplayName("Deleting an order")
-    @Description("After creating an order, you need to delete it")
+    @After
+
     public void cleanUpTest() {
         if (track != null) {
             ValidatableResponse deleteResponse = orderApi.deleteOrders(track);

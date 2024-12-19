@@ -21,10 +21,7 @@ public class CreateCourierTest {
     private int courierId = 0;
 
 
-    @Before
-    public void setUp() {
-        courierApi = new CourierApi();
-    }
+
 
     @After
     public void cleanUp() {
@@ -39,8 +36,7 @@ public class CreateCourierTest {
     public void courierCanBeCreatedTest() {
         String uniqueLogin = "TestUser_" + System.currentTimeMillis();
         courierDataLombok = new CourierDataLombok(uniqueLogin, "passwordsqmrg", "VladQVOto");
-
-
+        courierApi = new CourierApi();
         ValidatableResponse response = courierApi.createCourierLombok(courierDataLombok);
         response.log().all()
                 .assertThat()
@@ -54,7 +50,7 @@ public class CreateCourierTest {
     public void duplicateCourierCannotBeCreatedTest() {
         String login = "DuplicateUser";
         courierDataLombok = new CourierDataLombok(login, "password123", "Vlad");
-
+        courierApi = new CourierApi();
         // Создаем первого курьера
         courierApi.createCourierLombok(courierDataLombok);
 
@@ -71,7 +67,7 @@ public class CreateCourierTest {
     @Description("If you do not enter a username, the courier will not be created")
     public void courierCannotBeCreatedWithoutRequiredFieldsTest() {
         courierDataLombok = new CourierDataLombok(null, "password", "TestName");
-
+        courierApi = new CourierApi();
         ValidatableResponse response = courierApi.createCourierLombok(courierDataLombok);
 
         response.log().all()
@@ -84,7 +80,7 @@ public class CreateCourierTest {
     @Description("If you do not enter a password, the courier will not be created")
     public void courierCannotBeCreatedWithoutPasswordTest() {
         courierDataLombok = new CourierDataLombok("TestUser", null, "TestName");
-
+        courierApi = new CourierApi();
         ValidatableResponse response = courierApi.createCourierLombok(courierDataLombok);
 
         response.log().all()
